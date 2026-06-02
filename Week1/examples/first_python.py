@@ -46,3 +46,29 @@ print(formatted_by_method_string)
 my_string = "Hello Will"
 just_hello = my_string[0:5]
 print(just_hello)
+just_will = my_string[6:] # or my_string[6:10] 
+print(just_will)
+
+#use a negative number to work backwaards in a string (-1 is the last element of the string)
+using_negative_index = my_string[0:-2] # this will be "Hello Wi"
+
+print(using_negative_index)
+#use the 3rd position to designate the increment steps
+every_other_letter = my_string[0::2] # starts with first character and appends every other letter after it
+print(every_other_letter)
+reversed_letters = my_string[::-1]
+print(reversed_letters)
+
+#be carfeul the length of the string is not the same as the number of index positions
+print(len(my_string))
+# print(my_string[10]) # will give an error
+
+a_number:int = 3.0
+print(type(a_number))
+a_string3:str =str(a_number)
+print(type(a_string3))
+
+
+
+
+
