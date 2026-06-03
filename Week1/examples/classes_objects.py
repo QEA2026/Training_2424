@@ -2,6 +2,7 @@
 import day2
 
 print(day2.name)
+print("day 2 imported")
 
 #This needs to be added to the example when you get to abstract classes and methods
 from abc import ABC, abstractmethod

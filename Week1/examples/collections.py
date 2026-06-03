@@ -52,4 +52,47 @@ print(to_sort_numbers)
 #or use below, thank you Landon
 print(to_sort_numbers[::-1])
 
+#list.copy() returns a "shallow" copy of the list
+
+copied_list= sort_using_key.copy()
+
+print(copied_list)
+
+# Sets 
+
+well = "well"
+lets = "let's"
+see = "See"
+how = "how"
+this = "this"
+works = "works"
+
+my_set = {1,1,1,1,1,1,1,1} 
+print(my_set)
+my_set.add(well)
+my_set.add(well)
+my_set.add(well)
+my_set.add(lets)
+my_set.add(see)
+my_set.add(4)
+my_set.add(how)
+my_set.add(this)
+my_set.add(works)
+print(my_set)
+
+#set.pop() removes an element and returns it from the set. Can't be sure which it is
+print(my_set.pop())
+print(my_set)
+
+#set.discard(x) and set.remove(x) both try to remove the specified item, discard will not raise an error if the element does not 
+#does not exist
+
+my_set.remove("works")
+print(my_set)
+
+this_is_fixed = ("these","are","stuck","are")
+
+print(this_is_fixed.count("are"))
+
+print(this_is_fixed.index("these"))
 
