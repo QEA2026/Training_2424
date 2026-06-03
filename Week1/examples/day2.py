@@ -17,3 +17,18 @@ print(name) #prints Will2
 print(local_and_enclosed()) #prints Sam first because of the enclosed() method, then it prints Luke because of the local assignment
 print(name)
 
+print(dir())
+
+class Num:
+    def __init__(self, number):
+        self.number=number
+    def __add__(self, other):
+        return self.number + other*100
+    
+num = Num(10)
+print(num.number)
+print(num + 2) #210
+
+
+
+
