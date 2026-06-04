@@ -12,5 +12,20 @@ def hello_world():
 def greeting(name:str) -> str:
     return f"Hello {name}"
 
+@app.route("/<num1>/add/<num2>",methods=["GET"])
+def addition(num1:str, num2:str) ->str:
+    result = int(num1) + int(num2)
+    return str(result)
+
+@app.route("/login",methods=["POST"])
+def login():
+    credentials = request.get_json() #sets our variable to the JSON dictionary values
+    username = credentials["username"]
+    password = credentials["password"]
+    if username == "good" and password == "correct":
+        return "your credentials are good"
+    else:
+        return "your credentials are bad"
+
 app.run()
 
