@@ -18,14 +18,20 @@ def addition(num1:str, num2:str) ->str:
     return str(result)
 
 @app.route("/login",methods=["POST"])
-def login():
-    credentials = request.get_json() #sets our variable to the JSON dictionary values
-    username = credentials["username"]
-    password = credentials["password"]
+def login() -> str:
+    credentials:dict = request.get_json() #sets our variable to the JSON dictionary values
+    username:str = credentials["username"]
+    password:str = credentials["password"]
     if username == "good" and password == "correct":
         return "your credentials are good"
     else:
         return "your credentials are bad"
+
+@app.route("/count",methods=["PUT"])
+def add_count():
+    global count
+    count +=1
+    return f"The count is now {count}"
 
 app.run()
 
