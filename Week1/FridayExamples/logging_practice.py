@@ -15,11 +15,11 @@ logging.basicConfig(
     force=True #Reset any previos config
 
 )
-logging.debug("Detailed debug information")
-logging.warning("this is a warning")
-logging.info("info message")
-logging.error("error message")
-logging.critical("Critical Message")
+# logging.debug("Detailed debug information")
+# logging.warning("this is a warning")
+# logging.info("info message")
+# logging.error("error message")
+# logging.critical("Critical Message")
 
 # Named loggers with handlers
 
@@ -36,3 +36,21 @@ console.setFormatter(logging.Formatter(
 ))
 
 #File Handler
+log_file = "demo_output.log"
+file_handler = logging.FileHandler(log_file, mode="w")
+file_handler.setLevel(logging.DEBUG)
+file_handler.setFormatter(logging.Formatter(
+    "%(asctime)s | %(levelname)-8s | %(name)s:%(lineno)d | %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S"
+
+))
+logger.addHandler(console)
+logger.addHandler(file_handler)
+
+logging.debug("Detailed debug information")
+logging.warning("this is a warning")
+logging.info("info message")
+logging.error("error message")
+logging.critical("Critical Message")
+
+
