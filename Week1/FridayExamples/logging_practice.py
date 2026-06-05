@@ -42,15 +42,15 @@ file_handler.setLevel(logging.DEBUG)
 file_handler.setFormatter(logging.Formatter(
     "%(asctime)s | %(levelname)-8s | %(name)s:%(lineno)d | %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S"
-
 ))
+
 logger.addHandler(console)
 logger.addHandler(file_handler)
 
-logging.debug("Detailed debug information")
-logging.warning("this is a warning")
-logging.info("info message")
-logging.error("error message")
-logging.critical("Critical Message")
+logger.debug("Detailed debug information")
+logger.warning("this is a warning")
+logger.info("info message")
+logger.error("error message")
+logger.critical("Critical Message")
 
 
