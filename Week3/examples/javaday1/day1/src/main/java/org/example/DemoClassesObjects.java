@@ -82,6 +82,12 @@ class DemoClassesObjects {
             System.out.println("row " + r + ": + " + Arrays.toString(grid[r]));
         }
 
+        System.out.println("\n--- Array utility ---");
+        int[] copy = Arrays.copyOf(scores,scores.length);
+        Arrays.sort(copy);
+        System.out.println("sorted" + Arrays.toString(copy));
+        System.out.println("binarySearch 88:" + Arrays.binarySearch(copy,88));
+
     }
 }
 
