@@ -1,12 +1,13 @@
 package org.example;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 class DemoClassesObjects {
 
     static class Student {
         private static int nextId = 1;
-        private static int totalStudents =0;
+        private static int totalStudents = 0;
 
         private final int id;
         private String name;
@@ -15,7 +16,7 @@ class DemoClassesObjects {
             System.out.println(" [static block] Student class loaded");
         }
 
-        Student(String name){
+        Student(String name) {
             this.id = nextId++;
             this.name = name;
             totalStudents++;
@@ -63,12 +64,29 @@ class DemoClassesObjects {
     }
 
     public static void main(String[] args) {
+        int[] scores = {72, 91, 68, 88};
 
-        Student a = new Student("Asha");
-        Student b = new Student("Ben");
-        System.out.println(a);
-        System.out.println(b);
+        System.out.println("--- classic for (index needed) ---");
+        for (int i=0; i<scores.length; i++){
+            System.out.println("index +" + i + "=>" + scores[i]);
+        }
+
+        System.out.println("\n--- multidimensional (array of arrays) ---");
+        int[][] grid = {
+                {1,2,3},
+                {4,5},
+                {6,7,8,9}
+        };
+
+        for(int r = 0; r < grid.length; r++) {
+            System.out.println("row " + r + ": + " + Arrays.toString(grid[r]));
+        }
 
     }
-
 }
+
+
+
+
+
+
