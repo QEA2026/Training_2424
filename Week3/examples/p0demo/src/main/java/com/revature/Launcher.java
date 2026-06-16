@@ -11,11 +11,19 @@ public class Launcher {
     public static void main(String[] args) {
 
         Employee e1 = new Employee("john","smith");
-        System.out.println(e1);
+//        System.out.println(e1);
 
         EmployeeDAO eDAO = new EmployeeDAO();
 
+        eDAO.insertEmployee(e1);
+
         ArrayList<Employee> employees =  eDAO.getEmployees();
+
+        for(Employee e: employees){
+            System.out.println(e);
+        }
+
+
 
     }
 }
