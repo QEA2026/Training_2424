@@ -1,6 +1,9 @@
 package com.revature;
 
+import com.revature.DAOs.EmployeeDAO;
 import com.revature.models.Employee;
+
+import java.util.ArrayList;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -9,6 +12,10 @@ public class Launcher {
 
         Employee e1 = new Employee("john","smith");
         System.out.println(e1);
+
+        EmployeeDAO eDAO = new EmployeeDAO();
+
+        ArrayList<Employee> employees =  eDAO.getEmployees();
 
     }
 }
