@@ -35,7 +35,7 @@ public class LinkedVsArrayVsVector {
             //Index GET
             things = ListFactory.getList(number);
 
-            //fil list for read/remove tests
+            //fill list for read/remove tests
             for(int i=0; i<200000; i++){
                 things.add(0, new Object());
             }
@@ -56,6 +56,15 @@ public class LinkedVsArrayVsVector {
             }
             end = System.nanoTime();
             System.out.println("Iterator traversal(): " +(end-start)/1_000_000 + "ms");
+
+            //Remove FRONT
+
+            start = System.nanoTime();
+            for(int i=0; i<100000; i++){
+                things.remove(i);
+            }
+            end = System.nanoTime();
+            System.out.println("Remove From Front: " +(end-start)/1_000_000 + "ms");
 
             System.out.println("\nTry another: 1 ArrayList, 2 LinkedList, 3 Vector, 0 quit");
 
