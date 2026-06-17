@@ -2,6 +2,7 @@ package com.revature;
 
 import com.revature.DAOs.EmployeeDAO;
 import com.revature.models.Employee;
+import io.javalin.Javalin;
 
 import java.util.ArrayList;
 
@@ -14,14 +15,19 @@ public class Launcher {
 //        System.out.println(e1);
 
         EmployeeDAO eDAO = new EmployeeDAO();
-
-        eDAO.insertEmployee(e1);
+//
+//        eDAO.insertEmployee(e1);
 
         ArrayList<Employee> employees =  eDAO.getEmployees();
 
         for(Employee e: employees){
             System.out.println(e);
         }
+
+        var app = Javalin.create( config -> {
+            config.routes.get("hello",ctx -> ctx.result("Hello World"));
+
+        }).start(3000);
 
 
 
