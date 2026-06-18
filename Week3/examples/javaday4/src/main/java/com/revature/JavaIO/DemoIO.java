@@ -11,6 +11,7 @@ public class DemoIO {
             System.out.println(" -------------- ");
             readingData.readWithFilesAPI();
             WritingAppending.writeAndCreate();
+            WritingAppending.endToEndScenario();
         } catch (IOException e){
             System.out.println("File error occurred: " +e.getStackTrace());
         }
