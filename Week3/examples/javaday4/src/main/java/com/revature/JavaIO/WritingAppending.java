@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class WritingAppending {
     static void writeAndCreate() throws IOException {
@@ -36,5 +37,17 @@ public class WritingAppending {
 
         }
         System.out.println("Appended TO: " + report.toAbsolutePath());
+
+        //Files.writeString() - most concise ---
+        Path summary = outputDir.resolve("summary.txt");
+        Files.writeString(summary, "Total: 50 | Pass:48 | Fail: 2\n");
+        System.out.println("Summary written: " + Files.readString(summary));
+
+        // Files.write(List)
+        Path results = outputDir.resolve("results.txt");
+        List<String> entries = List.of("PASS LoginTest", "PASS SearchTest","FAIL CheckoutTest");
+        Files.write(results, entries);
+        System.out.println("Results list written: " +Files.readAllLines(results));
+
     }
 }
