@@ -17,15 +17,17 @@ public class Sku implements Comparable<Sku>{
 
     @Override
     public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Sku sku = (Sku) o;
-        return Objects.equals(code, sku.code);
-    }
+        if (this == o) return true;
+        if (!(o instanceof Sku sku)) return false;
+
+        //CASE-INSENSITIVE comparison
+        return code != null && code.equalsIgnoreCase(sku.code);
+    };
 
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(code);
+        return code == null ? 0 : code.toLowerCase().hashCode();
     }
 
     //will ignore case when comparing
