@@ -7,6 +7,7 @@ public class DemoIO {
         try{
             setup.setupSampleData();
             inspection.inspectPath();
+            readingData.readWithBufferedReader();
         } catch (IOException e){
             System.out.println("File error occurred: " +e.getStackTrace());
         }
