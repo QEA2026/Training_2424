@@ -10,6 +10,7 @@ public class DemoIO {
             readingData.readWithBufferedReader();
             System.out.println(" -------------- ");
             readingData.readWithFilesAPI();
+            WritingAppending.writeAndCreate();
         } catch (IOException e){
             System.out.println("File error occurred: " +e.getStackTrace());
         }
