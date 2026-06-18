@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 public class readingData {
 
@@ -26,6 +27,23 @@ public class readingData {
         } catch (IOException e){
             System.err.println("Could not read file");
         }
+    }
+
+    //reading with Files convenience methods (modern / Java 11)
+    //"But for small files, this is all you need"
+
+    static void readWithFilesAPI() throws IOException{
+        Path path = Paths.get("data/scores.csv");
+
+        //Option A: all lines as List<String> (Java 7+)
+        System.out.println("-- readAllLines():");
+        List<String> lines = Files.readAllLines(path);
+        lines.forEach(l-> System.out.println("  "+ l));
+
+        //Option B: entire file as one String (Java 11+)
+        System.out.println("\n--readString():");
+        String content = Files.readString(path);
+        System.out.println(content);
     }
 
 }

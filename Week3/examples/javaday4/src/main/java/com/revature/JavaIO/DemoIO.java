@@ -8,6 +8,8 @@ public class DemoIO {
             setup.setupSampleData();
             inspection.inspectPath();
             readingData.readWithBufferedReader();
+            System.out.println(" -------------- ");
+            readingData.readWithFilesAPI();
         } catch (IOException e){
             System.out.println("File error occurred: " +e.getStackTrace());
         }
