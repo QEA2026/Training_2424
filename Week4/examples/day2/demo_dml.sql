@@ -42,6 +42,17 @@ SET unit_price = 13.00,
 	stock_qty = stock_qty-2
 WHERE sku = 'MUG-01'
 	AND stock_qty>=2;
+
+-- UPDATE with join-like predicate via subquery (common pattern)
+UPDATE order_header
+SET status = 'PAID'
+	WHERE order_id = (
+	SELECT order_id FROM order_header oh
+	JOIN customer c ON c.customer_id = oh.customer_id
+	WHERE c.email='ada@example.com'
+	ORDER BY oh.order_id DESC
+	LIMIT 1
+	);
 	
 
 
