@@ -45,6 +45,37 @@ INSERT INTO tmp_order_lines_1nf VALUES
 
 SELECT * FROM tmp_order_tags_1nf;
 SELECT * FROM tmp_order_lines_1nf;
+--in 1nf now
 
+--2NF: remove partial dependency -tage should not depend on only part 
+-- of a composite key, if we have (order_ref,line_no) ->sku->product_name
 
+DROP TABLE IF EXISTS tmp_product_2nf CASCADE;
+CREATE TEMP TABLE tmp_product_2nf (
+	sku TEXT PRIMARY KEY,
+	tag TEXT NOT NULL
+);
+
+INSERT INTO tmp_product_2nf VALUES
+	('SKU-1','retail'),
+	('SKU-2','priority'),
+	('SKU-3','wholesale');
+
+--lines now reference SKU; product name lives only on product (not duplicated per line row conceptually)
+DROP TABLE IF EXISTS tmp_order_lines_2nf CASCADE;
+CREATE TEMP TABLE tmp_order_lines_2nf (
+	order_ref TEXT NOT NULL,
+	line_no INTEGER NOT NULL,
+	sku TEXT NOT NULL REFERENCES tmp_product_2nf (sku),
+	qty INTEGER NOT NULL,
+	PRIMARY KEY (order_ref, line_no)
+	);
+
+INSERT INTO tmp_order_lines_2nf VALUES
+('SO-100',1,'SKU-1',2),
+('SO-100',2,'SKU-2',1),
+('SO-101',1,'SKU-3',5);
+
+SELECT * FROM tmp_product_2nf;
+SELECT * FROM tmp_order_lines_2nf;
 	
