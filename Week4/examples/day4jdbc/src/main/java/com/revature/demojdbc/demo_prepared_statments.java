@@ -7,9 +7,9 @@ public class demo_prepared_statments {
     private static final String URL = "jdbc:sqlite:week4_jdbc_prep_demo.db";
 
     public static void main(String[] args) throws SQLException {
-        String userInput = "alice";
+//        String userInput = "alice";
         //try this for example SQL Injection attack
-//        String userInput = "' OR '1'='1";
+        String userInput = "' OR '1'='1";
 
 
         //open database connection
@@ -53,6 +53,7 @@ public class demo_prepared_statments {
             }
             String safeSQL = "Select name, secret from user_account WHERE name = ?";
             //? is a parameter placeholder
+            System.out.println("Parameter binding(PrepareStatement)");
             try (PreparedStatement ps = conn.prepareStatement(safeSQL)){
                 //Bind user input to parameter #1
                 ps.setString(1,userInput);
