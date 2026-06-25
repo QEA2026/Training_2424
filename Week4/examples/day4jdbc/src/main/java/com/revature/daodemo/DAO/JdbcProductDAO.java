@@ -37,16 +37,39 @@ public class JdbcProductDAO implements ProductDAO{
 
     @Override
     public Optional<Product> findBySku(String sku) throws Exception {
+        String sql = "SELECT id, sku, name, price FROM product WHERE sku = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)){
+            ps.setString(1,sku);
+            try(ResultSet rs = ps.executeQuery()){
+                if (rs.next()){
+                    return Optional.of(mapRow(rs));
+                }
+            }
+        }
         return Optional.empty();
     }
 
     @Override
     public void updatePrice(String sku, double newPrice) throws SQLException {
+        String sql = "UPDATE product SET price = ? WHERE sku = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)){
+            ps.setDouble(1,newPrice);
+            ps.setString(2,sku);
+            int n = ps.executeUpdate();
+            if(n!=1){
+                throw new IllegalStateException("expected 1 row updated, got "+n);
+            }
+        }
 
     }
 
     @Override
     public void deleteBySku(String sku) throws SQLException {
+        String sql = "DELETE FROM product WHERE sku = ?";
+        try(PreparedStatement ps = connection.prepareStatement(sql)){
+            ps.setString(1,sku);
+            ps.executeUpdate();
+        }
 
     }
 
@@ -71,4 +94,6 @@ public class JdbcProductDAO implements ProductDAO{
                 rs.getDouble("price")
         );
     }
+
+
 }
