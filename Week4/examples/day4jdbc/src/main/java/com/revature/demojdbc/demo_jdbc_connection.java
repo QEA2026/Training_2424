@@ -1,9 +1,6 @@
 package com.revature.demojdbc;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class demo_jdbc_connection {
 
@@ -18,6 +15,50 @@ public class demo_jdbc_connection {
 
             //Create a fresh customer table
             bootstrapSchema(conn);
+
+            //INSERT DATA
+
+            //Create a parameterized SQL statement
+            //? placeholders will be replaced with values safely
+
+            try (PreparedStatement ins = conn.prepareStatement(
+                    "INSERT INTO customer (email, name) VALUES (?,?)")) {
+
+                // Set values for the placeholders
+                ins.setString(1,"jdbc@example.com");
+                ins.setString(2,"JDBC Explorer");
+
+                //Execute INSERT statement
+
+                ins.executeUpdate();
+            }
+
+            //Create a parameterized SELECT statement
+            try(PreparedStatement q = conn.prepareStatement(
+                    "SELECT id, email, name FROM customer WHERE email = ?")){
+
+                //Set the email parameter
+                q.setString(1,"jdbc@example.com");
+
+                //Execute query to obtain a ResultSet
+                try (ResultSet rs = q.executeQuery()){
+
+                    //Move through each row in the result set.
+                    while(rs.next()){
+
+                        //Read column values from current row
+                        long id = rs.getLong("id");
+                        String email = rs.getString("email");
+                        String name = rs.getString("name");
+
+                        //Print row contents.
+                        System.out.printf("row: id=%d email=%s name=%s%n", id, email, name);
+                    }
+                }
+
+            }
+
+
         }
     }
 
