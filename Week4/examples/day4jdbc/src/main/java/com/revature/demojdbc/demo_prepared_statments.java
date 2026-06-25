@@ -8,6 +8,9 @@ public class demo_prepared_statments {
 
     public static void main(String[] args) throws SQLException {
         String userInput = "alice";
+        //try this for example SQL Injection attack
+//        String userInput = "' OR '1'='1";
+
 
         //open database connection
         try(Connection conn = DriverManager.getConnection(URL)){
@@ -47,6 +50,23 @@ public class demo_prepared_statments {
                             );
                         }
 
+            }
+            String safeSQL = "Select name, secret from user_account WHERE name = ?";
+            //? is a parameter placeholder
+            try (PreparedStatement ps = conn.prepareStatement(safeSQL)){
+                //Bind user input to parameter #1
+                ps.setString(1,userInput);
+
+                //ExecuteQuery
+                try(ResultSet rs = ps.executeQuery()){
+                    while(rs.next()){
+                        System.out.printf(
+                                "matched: %s / %s%n",
+                                rs.getString(1), //name column
+                                rs.getString(2) //secret column
+                        );
+                    }
+                }
             }
 
         }
