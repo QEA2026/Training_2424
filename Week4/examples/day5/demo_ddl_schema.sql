@@ -1,7 +1,7 @@
 -- Week 4 Monday — Instructor demo: multi-table DDL with constraints (PostgreSQL)
 -- Theory tie-in: written/ddl-data-definition-language.md, constraints.md, referential-integrity.md
 -- Run in a scratch database: CREATE DATABASE week4_demo; \c week4_demo;
-SET SEARCH_PATH to test11;
+SET SEARCH_PATH to test2;
 
 BEGIN;
 
