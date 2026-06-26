@@ -24,3 +24,33 @@ JOIN order_line ol ON oh.order_id = ol.order_id
 GROUP BY c.customer_id
 ORDER BY total_qty DESC;
 
+-- Aggregates + GROUP BY + HAVING: revenue per customer above a threshold
+
+SELECT c.email,
+	SUM(ol.qty * ol.unit_price) as REVENUE,
+	COUNT(DISTINCT oh.order_id) AS order_count
+FROM customer c
+JOIN order_header oh on c.customer_id = oh.customer_id
+JOIN order_line ol ON oh.order_id = ol.order_id
+GROUP BY c.customer_id
+HAVING SUM(ol.qty * ol.unit_price) >1000
+ORDER BY REVENUE DESC;
+
+-- to show difference of WHERE vs HAVING 
+
+SELECT c.email,
+	SUM(ol.qty * ol.unit_price) as REVENUE,
+	COUNT(DISTINCT oh.order_id) AS order_count
+FROM customer c
+JOIN order_header oh on c.customer_id = oh.customer_id
+JOIN order_line ol ON oh.order_id = ol.order_id
+WHERE ol.qty>=2
+GROUP BY c.customer_id
+HAVING SUM(ol.qty * ol.unit_price) >500
+ORDER BY REVENUE DESC;
+
+-- 
+
+
+
+
