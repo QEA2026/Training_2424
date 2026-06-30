@@ -16,7 +16,6 @@ def get_shipping_tier (order_total: float, priority: bool) -> str:
         'EXPRESS', 'STANDARD', or 'NO_FREE_SHIPPING'
     
     """
-
     if order_total > 100: 
         if priority:
             return "EXPRESS"
