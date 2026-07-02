@@ -19,7 +19,11 @@ def assess_loan(age: int, income: float, credit_score: int, employed: bool)-> st
         'ELIGIBLE','INELIGIBLE_AGE','INELIGIBLE_INCOME', 'INELIGIBLE_CREDIT',or 'INELIGIBLE_EMPLOYMENT'
         """
     
-    if age <18 or age>65:
+    # if age <18 or age>65:
+    #     return "INELIGIBLE_AGE"
+    if age <18:
+        return "INELIGIBLE_AGE"
+    if age>65:
         return "INELIGIBLE_AGE"
     if income <25000:
         return "INELIGIBLE_INCOME"

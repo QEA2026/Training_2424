@@ -5,8 +5,8 @@ def test_happy_path_eligible():
     """All condition False -> ELIGIBLE. One test, many uncovered branches"""
     assert assess_loan(age=30,income=30000,credit_score=700,employed=True) == "ELIGIBLE"
 
-# def test_ineligible_age_too_young():
-#     assert assess_loan(age=16, income=30000,credit_score=700,employed=True) == "INELIGIBLE_AGE"
+def test_ineligible_age_too_young():
+    assert assess_loan(age=16, income=30000,credit_score=700,employed=True) == "INELIGIBLE_AGE"
 
 # def test_ineligible_age_too_old():
 #     assert assess_loan(age=70, income=30000,credit_score=700,employed=True) == "INELIGIBLE_AGE"
