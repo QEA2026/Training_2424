@@ -1,3 +1,23 @@
+## Some Behavioral Questions: 
+ 
+- Tell me about yourself / tell me about your projects
+ 
+ -Tell me about yourself, how would you go about learning a new technology? 
+ 
+- How do you interact with remote coworkers and how do you communicate with your team effectively?
+
+- What would you do if you didn't know what was the best way to present information to a client and co workers were learning at a faster pace than you?
+ 
+- do you like quality engineering and testing? and why?
+ 
+- How do you deal with criticism and how do you go about debugging?
+ 
+- Tell me about yourself and how you got into tech.
+ 
+- Tell me why you are interested in quality engineering
+
+
+
 ## Python
 - How would you pull even and odd numbers from a list?
 - Given a list of numbers, how would you find the 2nd largest number?
