@@ -5,6 +5,7 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Test Lifecycle Demo")
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class demo_lifecycle_methods {
 
     //shared across test (set in @BeforaAll)
@@ -54,6 +55,7 @@ public class demo_lifecycle_methods {
 
     //actual tests
     @Test
+    @Order(1)
     @DisplayName("First test - Calculator is fresh")
     void testOne(){
         System.out.println("running test one ....");
@@ -63,6 +65,7 @@ public class demo_lifecycle_methods {
     }
 
     @Test
+    @Order(2)
     @DisplayName("Second test - Calculator is fresh again")
     void testTwo(){
         System.out.println("running test two ....");
@@ -74,6 +77,7 @@ public class demo_lifecycle_methods {
     }
 
     @Test
+    @Order(3)
     @DisplayName("Third Test - Demonstrates Isolation")
     void testThree(){
         System.out.println("Running test three...");
