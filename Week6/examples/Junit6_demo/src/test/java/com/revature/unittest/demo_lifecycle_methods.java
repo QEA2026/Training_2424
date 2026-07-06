@@ -2,8 +2,7 @@ package com.revature.unittest;
 
 import org.junit.jupiter.api.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Test Lifecycle Demo")
 public class demo_lifecycle_methods {
@@ -72,5 +71,55 @@ public class demo_lifecycle_methods {
         //Even if test one modified calculator, we get a fresh one
         assertEquals(8,calculator.add(5,3));
 
+    }
+
+    @Test
+    @DisplayName("Third Test - Demonstrates Isolation")
+    void testThree(){
+        System.out.println("Running test three...");
+        testLog.append("test three executed");
+
+        //this test is completely independent
+        assertEquals(6,calculator.multiply(2,3));
+
+        //testLog is fresh - doesn't have entried from previous tests
+        assertTrue(testLog.toString().contains("test three"));
+        assertFalse(testLog.toString().contains("test one"));
+    }
+
+    //@AfterEach - per-test cleanup
+    @AfterEach
+    void tearDown(TestInfo testInfo){
+        System.out.println("@AfterEach: cleaning up after: " +
+                testInfo.getDisplayName());
+
+        //Log final state
+        testLog.append(" | Test completed");
+        System.out.println("Log: "+ testLog.toString());
+
+        //clean up per-test resources
+        calculator=null;
+        testLog=null;
+
+        // - roll back transactions
+        // - delete test data
+        // - close file handlers
+        // - reset any modified state
+    }
+
+    //AfterAll
+    @AfterAll
+    static  void tearDownClass(){
+        System.out.println("@AfterAll: cleaning up test class ONCE");
+        System.out.println("Total tests run: "+ testCounter);
+
+        //release shared resources
+        sharedResource = null;
+
+        //this is where you would
+        // - stop mock servers
+        // - close database connections
+        // - clean up temp files
+        // - release expensive resources
     }
 }
