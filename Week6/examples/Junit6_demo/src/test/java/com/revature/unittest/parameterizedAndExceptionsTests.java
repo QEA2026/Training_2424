@@ -4,13 +4,9 @@ package com.revature.unittest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EmptySource;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
-import org.junit.jupiter.params.provider.NullSource;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.*;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class parameterizedAndExceptionsTests {
     // Parameterized Tests - Data-Driven Testing
@@ -68,6 +64,46 @@ public class parameterizedAndExceptionsTests {
         void validateInput_blankInputs_rejected(String input){
             //combine source for comprehensive blank checking
             assertTrue(input==null || input.trim().isEmpty());
+        }
+    }
+
+    @Nested
+    @DisplayName("@CsvSource Examples")
+    class CsvSourceExamples{
+        @ParameterizedTest
+        @CsvSource({
+                "1, 2, 3",
+                "0, 0, 0",
+                "-1, 1, 0",
+                "100, 200, 300",
+                "-5, -10, -15"
+        })
+        @DisplayName("Addition with various inputs")
+        void add_variousInputs_correctResult(int a, int b, int expected){
+            assertEquals(expected, calculator.add(a,b));
+        }
+
+        @ParameterizedTest(name = "{0}+{1}={2}") //Custom Display Name!
+        @CsvSource({
+                "1, 1, 2",
+                "2, 3, 5",
+                "10, 20, 30"
+        })
+        @DisplayName("Addition with Custom Display Names")
+        void add_withCustomDisplayName(int a, int b, int expected){
+            assertEquals(expected, calculator.add(a,b));
+        }
+
+        @ParameterizedTest
+        @CsvSource(value = {
+                "hello | 5",
+                "world | 5",
+                "JUnit | 5",
+                "testing | 7"
+        }, delimiter = '|') //custom delimeter
+        @DisplayName("String length with pipe delimiter")
+        void stringLength_customerDelimiter(String input, int expectedLength){
+            assertEquals(expectedLength, input.length());
         }
     }
 }
