@@ -3,6 +3,8 @@ package com.revature.unittest;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.*;
 
@@ -171,5 +173,54 @@ public class parameterizedAndExceptionsTests {
             assertNotNull(op);
             assertNotNull(op.name());
         }
+    }
+
+    @Nested
+    @DisplayName("Exception Testing Demo")
+    class Exceptions{
+
+        //assertThrows is the primary tool - returns the exception for inspection
+        //Always verify exception type
+        //verify exception MESSAGE when it contains useful info
+        //assertDoesNotThrow explicitly documents "this should NOT throw"
+
+        Calculator calculator = new Calculator();
+
+        @Test
+        @DisplayName("Division by zero throws ArithmeticException")
+        void divide_byZero_throwsArithmeticException(){
+            //Basic usage - just verify the exception type
+            assertThrows((ArithmeticException.class), ()->{
+                calculator.divide(10,0);
+            });
+        }
+
+        @Test
+        @DisplayName("Capture expection and verify message")
+        void divide_byZero_exceptionHasCorrectMessage(){
+            ArithmeticException exception = assertThrows(
+                    ArithmeticException.class,
+                    ()->calculator.divide(10,0)
+            );
+
+            //now verify the message
+            assertEquals("cannot divide by zero",exception.getMessage().toLowerCase());
+        }
+
+        @Test
+        @DisplayName("Valid Division does not throw exception")
+        void divide_validInputs_noException(){
+            //Explicitly verify no exception is thrown
+            assertDoesNotThrow(()->{
+                calculator.divide(10,2);
+            });
+        }
+
+
+
+
+
+
+
     }
 }
