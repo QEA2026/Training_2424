@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Test Lifecycle Demo")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class demo_lifecycle_methods {
+public class demoLifecycleMethods {
 
     //shared across test (set in @BeforaAll)
     private static String sharedResource;
@@ -54,8 +54,8 @@ public class demo_lifecycle_methods {
     }
 
     //actual tests
-    @Test
     @Order(1)
+    @Test
     @DisplayName("First test - Calculator is fresh")
     void testOne(){
         System.out.println("running test one ....");
