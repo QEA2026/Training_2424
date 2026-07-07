@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.*;
 
+import java.util.stream.Stream;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class parameterizedAndExceptionsTests {
@@ -104,6 +106,70 @@ public class parameterizedAndExceptionsTests {
         @DisplayName("String length with pipe delimiter")
         void stringLength_customerDelimiter(String input, int expectedLength){
             assertEquals(expectedLength, input.length());
+        }
+    }
+
+    @Nested
+    @DisplayName("@MethodSource Examples")
+    class MethodSourceExamples{
+
+        @ParameterizedTest
+        @MethodSource("provideNumbersForAbsoluteValue")
+        @DisplayName("Absolute Value Calculation")
+        void absoluteValue_variousNumbers_correctResult(int input, int expected){
+            assertEquals(expected,calculator.absoluteValue(input));
+        }
+
+        //Provider method must be static and return Stream<Arguments>
+        static Stream<Arguments> provideNumbersForAbsoluteValue(){
+            return Stream.of(
+                    Arguments.of(5,5),
+                    Arguments.of(-5,5),
+                    Arguments.of(0,0),
+                    Arguments.of(-100,100),
+                    Arguments.of(Integer.MIN_VALUE+1,Integer.MAX_VALUE) //edge case
+
+            );
+        }
+
+        @ParameterizedTest
+        @MethodSource("provideMinMaxTestCases")
+        @DisplayName("Min/Max operations")
+        void minMax_variousCases_correctResult(int a, int b, int expectedMin, int expectedMax){
+            assertAll(
+                    ()->assertEquals(expectedMin, calculator.min(a,b)),
+                    ()->assertEquals(expectedMax, calculator.max(a,b))
+            );
+        }
+
+        static Stream<Arguments> provideMinMaxTestCases(){
+            return Stream.of(
+                    Arguments.of(1,5,1,5),
+                    Arguments.of(5,1,1,5),
+                    Arguments.of(-5,5,-5,5),
+                    Arguments.of(0,0,0,0),
+                    Arguments.of(-10,-5,-10,-5)
+
+            );
+        }
+
+    }
+
+    //First, define an enum for testing
+    enum Operation{
+        ADD, SUBTRACT, MULTIPLY
+    }
+
+    @Nested
+    @DisplayName("@EnumSource Examples")
+    class EnumSourceExamples{
+
+        @ParameterizedTest
+        @EnumSource(Operation.class)
+        @DisplayName("All Operations Should Be Valid")
+        void operation_allValues_valid(Operation op){
+            assertNotNull(op);
+            assertNotNull(op.name());
         }
     }
 }
