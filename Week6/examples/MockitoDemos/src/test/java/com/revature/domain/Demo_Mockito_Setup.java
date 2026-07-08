@@ -16,7 +16,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("Mockito Setup Demo")
@@ -50,6 +53,26 @@ public class Demo_Mockito_Setup {
         assertFalse(repository.existsByEmail("test@test.com"),
                 "Unstubbed mock returns false for boolean");
     }
+
+    //Basic stubbing - making mocks return values
+    @Test
+    @DisplayName("Stubbing mock to return specific value")
+    void demonstrateBasicStubbing() {
+        //ARRANGE : Define what the mock should return
+
+        User mockUser = new User(1L, "John Doe", "john@example.com");
+        when(repository.findById(1L)).thenReturn(Optional.of(mockUser));
+
+        //ACT: Call the service (which uses the mock)
+        User result = userService.getUser(1L);
+
+        //ASSERT: Verify we got the stubbed value
+        assertNotNull(result);
+        assertEquals("John Doe", result.getName());
+        assertEquals("john@example.com", result.getEmail());
+    }
+
+
 
 
 
