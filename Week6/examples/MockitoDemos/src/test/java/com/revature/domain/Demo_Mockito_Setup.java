@@ -19,6 +19,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -110,6 +112,51 @@ public class Demo_Mockito_Setup {
 
         //Verify
         assertEquals(42,service.getUserCount());
+    }
+
+    //The @InjectMocks Magic
+    @Test
+    @DisplayName("@InjectMocks automatically injects @Mock fields")
+    void demonstrateInjectMocks(){
+        //userService was create by @InjectMocks (above)
+        //It automatically received the @Mock repository and emailClient
+
+        //Stub repositoru
+        when(repository.existsByEmail(anyString())).thenReturn(false);
+        when(repository.save(any(User.class)))
+                .thenAnswer(inv->{
+                    User u = inv.getArgument(0);
+                    u.setId(100L);
+                    return u;
+                });
+
+        //stub email client
+        when(emailClient.send(anyString(),anyString(), anyString()))
+                .thenReturn(true);
+
+        //Act
+        User created = userService.createUser("Test User", "test@example.com");
+
+        //Assert
+        assertNotNull(created);
+        assertEquals(100L,created.getId());
+        assertEquals("Test User",created.getName());
+
+
+    }
+
+    @Test
+    @DisplayName("Dependency Injection enable testing")
+    void demonstrateDependencyInjection(){
+        //We can create services with any combination of real/mock dependences
+        UserRepository mockRepo = mock(UserRepository.class); //or could be real
+        EmailClient mockEmail = mock(EmailClient.class); //or could be real
+
+        UserService testService = new UserService(mockRepo,mockEmail);
+
+        //Now we control exactly what the service uses
+        when(mockRepo.count()).thenReturn(999L);
+        assertEquals(999L,testService.getUserCount());
     }
 
 
