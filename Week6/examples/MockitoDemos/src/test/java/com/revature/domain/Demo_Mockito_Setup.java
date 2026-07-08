@@ -19,6 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -95,6 +96,21 @@ public class Demo_Mockito_Setup {
     }
 
     //Creating Mocks Programmatically
+    @Test
+    @DisplayName("Alternative: Create mock with Mockito.mock()")
+    void demonstrateProgrammaticMockCreation(){
+        //Create mock programatically
+        UserRepository programaticMock = mock(UserRepository.class);
+
+        //stub it
+        when(programaticMock.count()).thenReturn(42L);
+
+        //Create service with programmatic mock
+        UserService service = new UserService(programaticMock);
+
+        //Verify
+        assertEquals(42,service.getUserCount());
+    }
 
 
 
