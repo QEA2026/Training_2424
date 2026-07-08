@@ -72,6 +72,31 @@ public class Demo_Mockito_Setup {
         assertEquals("john@example.com", result.getEmail());
     }
 
+    @Test
+    @DisplayName("Mock returns stubbed value only for matching arguments")
+    void demonstrateArgumentMatching(){
+        // Stub for ID 1
+        when(repository.findById(1L))
+                .thenReturn(Optional.of(new User(1L,"John","john@test.com")));
+
+        // Stub for ID 2
+        when(repository.findById(2L))
+                .thenReturn(Optional.of(new User(2L,"Jane","jane@test.com")));
+
+        // ID 1 returns John
+        assertEquals("John",userService.getUser(1L).getName());
+
+        // ID 2 returns Jane
+        assertEquals("Jane",userService.getUser(2L).getName());
+
+        // ID 3 is not stubbed - throws exception (from UserService)
+        assertThrows(UserService.UserNotFoundException.class,()-> userService.getUser(3L));
+
+    }
+
+    //Creating Mocks Programmatically
+
+
 
 
 
