@@ -38,3 +38,34 @@ def test_string_add(string_calculator):
     result = string_calculator.add("1,2,3")
     assert result == 6
 
+# Fixtures with Setup and TearDown(yield)
+@pytest.fixture
+def temp_file(tmp_path):
+    """Create a temp file, provide it, then clean it up
+    'tmp_path is a built-in pytest fixture"""
+
+    #SETUP
+    file_path = tmp_path / "test_data.txt"
+    # file_path = "test_data.txt"
+    file_path.write_text("test content")
+    print(f"\n[SETUP] Created temo file: {file_path}")
+
+    #PROVIDE TO TEST
+    yield file_path
+
+    #TEARDOWN (runs even if test fails!)
+    print(f"[TEARDOWN] Cleaning up : {file_path}")
+    if file_path.exists():
+        file_path.unlink()
+
+def test_temp_file_exists(temp_file):
+    """Test receives the temp file path."""
+    assert temp_file.exists()
+    assert temp_file.read_text() == "test content"
+
+def test_temp_file_can_be_modified(temp_file):
+    """Each test gets its own temp file."""
+    temp_file.write_text("modified content")
+    assert temp_file.read_text() == "modified content"
+
+
