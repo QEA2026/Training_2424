@@ -46,7 +46,6 @@ def temp_file(tmp_path):
 
     #SETUP
     file_path = tmp_path / "test_data.txt"
-    # file_path = "test_data.txt"
     file_path.write_text("test content")
     print(f"\n[SETUP] Created temo file: {file_path}")
 
