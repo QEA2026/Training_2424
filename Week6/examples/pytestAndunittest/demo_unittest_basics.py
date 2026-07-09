@@ -8,7 +8,7 @@
 
 # Run with this:
     #python -m unittest demo_unittest_basics.py -v
-    #python -m unittest demo_unittest_basics.TestCalculator.test_add -v
+    #ython -m unittest demo_unittest_basics.TestCalculatorBasic.test_add_returns_sum  -v
 #Compare WITH PYTEST:
     #pytest demo_unittest_basics.py -v #Pytest can run unittest tests!
 
@@ -52,3 +52,22 @@ class TestCalculatorBasic(unittest.TestCase):
         """Test multiply with message on failure."""
         result = self.calc.multiply(4,5)
         self.assertEqual(20,result,"4*5 should equal 20")
+
+    #Boolean Assertion
+    def test_is_even_true(self):
+        """User assertTrue for boolean True."""
+        self.assertTrue(self.calc.is_even(2))
+        self.assertTrue(self.calc.is_even(0))
+        self.assertTrue(self.calc.is_even(-4))
+
+    def test_is_even_false(self):
+        """Use assertFalse for boolean False."""
+        self.assertFalse(self.calc.is_even(1))
+        self.assertFalse(self.calc.is_even(-1))
+
+    def test_is_positive(self):
+        """Combined boolean assertions."""
+        self.assertTrue(self.calc.is_positive(1))
+        self.assertFalse(self.calc.is_positive(0))
+        self.assertFalse(self.calc.is_positive(-1))
+        self.assertTrue(self.calc.is_positive(100))
