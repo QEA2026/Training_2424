@@ -104,6 +104,145 @@ class TestModuleScoped:
         """Same calculator instance as test_module_1"""
         assert module_scoped_calc.add(2,2)==4
 
+# ==========================================================
+# SECTION 4: Fixture Dependencies (Fixtures using Fixtures)
+# ==========================================================
+
+@pytest.fixture
+def base_config():
+    """Base configuration."""
+    return {
+        "debug": True,
+        "log_level": "INFO"
+    }
+
+
+@pytest.fixture
+def extended_config(base_config):
+    """
+    Extended config that depends on base_config.
+    
+    Fixtures can depend on other fixtures!
+    """
+    config = base_config.copy()
+    config["feature_flags"] = {"new_ui": True}
+    return config
+
+
+@pytest.fixture
+def app(extended_config, calculator):
+    """
+    Application that depends on multiple fixtures.
+    
+    Pytest resolves the entire dependency tree automatically!
+    """
+    return {
+        "config": extended_config,
+        "calculator": calculator,
+        "name": "TestApp"
+    }
+
+
+def test_app_has_config(app):
+    """Test receives fully configured app."""
+    assert app["config"]["debug"] is True
+    assert "feature_flags" in app["config"]
+
+
+def test_app_has_calculator(app):
+    """App's calculator works."""
+    result = app["calculator"].add(5, 5)
+    assert result == 10
+
+
+# ==========================================================
+# SECTION 5: Parameterized Fixtures
+# ==========================================================
+
+@pytest.fixture(params=["add", "subtract", "multiply"])
+def operation(request):
+    """
+    Fixture that yields multiple values.
+    
+    Tests using this fixture run once for each parameter!
+    """
+    return request.param
+
+
+def test_calculator_has_operation(calculator, operation):
+    """
+    This test runs 3 times - once for each operation.
+    
+    Run with: pytest -v to see all three executions
+    """
+    assert hasattr(calculator, operation)
+    assert callable(getattr(calculator, operation))
+
+
+# ==========================================================
+# SECTION 6: Built-in Fixtures
+# ==========================================================
+
+def test_with_tmp_path(tmp_path):
+    """
+    tmp_path is a built-in pytest fixture.
+    
+    Provides a temporary directory unique to each test.
+    """
+    test_file = tmp_path / "test.txt"
+    test_file.write_text("hello")
+    assert test_file.read_text() == "hello"
+
+
+def test_with_capsys(capsys, calculator):
+    """
+    capsys captures stdout/stderr.
+    
+    Useful for testing code that prints output.
+    """
+    print(f"Result: {calculator.add(2, 3)}")
+    
+    captured = capsys.readouterr()
+    assert "Result: 5" in captured.out
+
+
+def test_with_monkeypatch(monkeypatch, calculator):
+    """
+    monkeypatch allows modifying objects during tests.
+    
+    Great for mocking environment variables, attributes, etc.
+    """
+    # Monkeypatch a method
+    monkeypatch.setattr(calculator, "add", lambda a, b: 999)
+    
+    assert calculator.add(1, 1) == 999  # Patched!
+
+
+# ==========================================================
+# SECTION 7: autouse Fixtures
+# ==========================================================
+
+@pytest.fixture(autouse=True)
+def log_test_start(request):
+    """
+    Runs automatically for every test in this module.
+    
+    autouse=True means tests don't need to request it.
+    """
+    print(f"\n>>> Starting test: {request.node.name}")
+    yield
+    print(f"<<< Finished test: {request.node.name}")
+
+
+def test_auto_logged_1():
+    """This test is automatically logged."""
+    assert True
+
+
+def test_auto_logged_2():
+    """This test is also automatically logged."""
+    assert True
+
 
 
 
