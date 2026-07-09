@@ -169,3 +169,6 @@ class TestFloatingPoint(unittest.TestCase):
         # Alternative: specify delta
         self.assertAlmostEqual(3.333, result, delta=0.001)
 
+if __name__ == "__main__":
+    #Run tests when executing this file directly
+    unittest.main(verbosity=2)
