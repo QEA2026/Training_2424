@@ -71,3 +71,22 @@ class TestCalculatorBasic(unittest.TestCase):
         self.assertFalse(self.calc.is_positive(0))
         self.assertFalse(self.calc.is_positive(-1))
         self.assertTrue(self.calc.is_positive(100))
+
+    #Comparison assertions
+    def test_greater_than(self):
+        """Use assertGreater and assertLess."""
+        self.assertGreater(self.calc.add(5,5),8)
+        self.assertLess(self.calc.subtract(10,3),10)
+        self.assertGreaterEqual(self.calc.multiply(2,3),6)
+        self.assertLessEqual(self.calc.divide(10,2),5)
+
+    #None and Type assertions
+    def test_assert_none(self):
+        """Use assertIsNone and assertIsNotNone"""
+        result = self.calc.add(1,2)
+        self.assertIsNotNone(result)
+
+    def test_assert_type(self):
+        """Use assertIsInstance for type checking."""
+        result = self.calc.divide(10,3)
+        self.assertIsInstance(result, float)
