@@ -67,4 +67,45 @@ def test_temp_file_can_be_modified(temp_file):
     temp_file.write_text("modified content")
     assert temp_file.read_text() == "modified content"
 
+#Fixture Scopes
+@pytest.fixture(scope="function") #default - new instance per test
+def function_scoped_calc():
+    print("\n[FUNCTION FIXTURE] Creating calculator")
+    calc = Calculator()
+    yield calc
+    
+    print("[FUNCTION FIXTURE] cleaning up")
+
+@pytest.fixture(scope = "class") #one instance for entire module
+def class_scoped_calc():
+    print("\n[CLASS FIXTURE] Creating calculator (once per class)")
+    calc = Calculator()
+
+    yield calc
+
+    print("[CLASS FIXTURE] Cleaning up")
+
+@pytest.fixture(scope = "module") #one instance for entire module
+def module_scoped_calc():
+    print("\n[MODULE FIXTURE] Creating calculator (once per module)")
+    calc = Calculator()
+
+    yield calc
+
+    print("[MODULE FIXTURE] Cleaning up")
+
+class TestModuleScoped:
+    """Tests sharing module-scoped fixture"""
+    def test_module_1(self, module_scoped_calc):
+        """Uses shared module calculator"""
+        assert module_scoped_calc.add(1,1)==2
+    
+    def test_module_2(self, module_scoped_calc):
+        """Same calculator instance as test_module_1"""
+        assert module_scoped_calc.add(2,2)==4
+
+
+
+
+
 
