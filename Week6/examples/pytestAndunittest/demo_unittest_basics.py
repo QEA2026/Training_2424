@@ -110,3 +110,62 @@ class TestCalculatorBasic(unittest.TestCase):
         with self.assertRaises(ValueError) as context:
             self.calc.power(2,-1)
         self.assertIn("negative",str(context.exception).lower())
+
+    def test_raises_callable_style(self):
+        """Alternate syntax for assertRaises"""
+        self.assertRaises(
+            ZeroDivisionError,
+            self.calc.divide,
+            10, 0
+        )
+
+class TestCalculatorAdvanced(unittest.TestCase):
+    """More advanced calculator tests."""
+
+    @classmethod
+    def setUpClass(cls):
+        """
+        Called once before all tests in this class.
+        Similar to @BeforeAll in JUnit5.
+        """
+        print("\n--- Setting up TestCalculatorAdvanced class ---")
+        cls.shared_calc = Calculator()
+
+    @classmethod
+    def tearDownClass(cls):
+        """
+        Called once after all tests in this class.
+        Similar to @AfterAll in JUnit5.
+        """
+        print("--- Tearing down TestCalculatorAdvanced class ---")
+        cls.shared_calc = None
+
+    def test_power_calculations(self):
+        """Use the class-level calculator."""
+        self.assertEqual(8, self.shared_calc.power(2, 3))
+        self.assertEqual(100, self.shared_calc.power(10, 2))
+
+    def test_edge_cases(self):
+        """Multiple assertions in one test."""
+        self.assertEqual(1, self.shared_calc.power(5, 0))
+        self.assertEqual(5, self.shared_calc.power(5, 1))
+
+
+class TestFloatingPoint(unittest.TestCase):
+    """Demonstrate floating-point comparison."""
+
+    def test_almost_equal(self):
+        """
+        Use assertAlmostEqual for floating-point comparisons.
+        
+        This is like assertEquals with delta in JUnit5.
+        """
+        calc = Calculator()
+        result = calc.divide(10, 3)  # 3.333...
+        
+        # Check to 2 decimal places (default is 7)
+        self.assertAlmostEqual(3.33, result, places=2)
+        
+        # Alternative: specify delta
+        self.assertAlmostEqual(3.333, result, delta=0.001)
+
