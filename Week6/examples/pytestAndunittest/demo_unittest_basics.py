@@ -90,3 +90,23 @@ class TestCalculatorBasic(unittest.TestCase):
         """Use assertIsInstance for type checking."""
         result = self.calc.divide(10,3)
         self.assertIsInstance(result, float)
+
+    #Exception Testing
+    def test_divide_by_zero_raises_exception(self):
+        """Use assertRaises to test exceptions
+        Can be used as context manager(recommended) or callable"""
+        #Context manager style (recommended)
+        with self.assertRaises(ZeroDivisionError):
+            self.calc.divide(10,0)
+    
+    def test_divide_by_zero_exception_message(self):
+        with self.assertRaises(ZeroDivisionError) as context:
+            self.calc.divide(10,0)
+
+        self.assertIn("zero",str(context.exception).lower())
+
+    def test_negative_exponent_raises_value_error(self):
+        """Test ValueError for negative exponent."""
+        with self.assertRaises(ValueError) as context:
+            self.calc.power(2,-1)
+        self.assertIn("negative",str(context.exception).lower())
