@@ -38,4 +38,23 @@ def test_magic_mock_configure_magic_methods():
     assert magic[0] =="item"
     assert magic["any_key"] == "item"
 
-    
+def test_magic_mock_iteration():
+    """MagicMock can be configured for iteration"""
+    magic = MagicMock()
+    magic.__iter__.return_value = iter([1,2,3])
+
+    result = list(magic)
+    assert result == [1,2,3]
+
+def test_magic_mock_context_manager():
+    """
+    MagicMock works as a context manager.
+    """
+    magic = MagicMock()
+    magic.__enter__.return_value = "context value"
+
+    with magic as value:
+        assert value == "context value"
+
+    magic.__enter__.assert_called_once()
+    magic.__exit__.assert_called_once()
