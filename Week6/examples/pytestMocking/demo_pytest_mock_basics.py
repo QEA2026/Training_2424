@@ -6,6 +6,7 @@
 # Install with: pip install pytest-mock
 
 import pytest
+import os
 from services import UserService, User, UserRepository, EmailClient
 
 #basic mock creation
@@ -41,4 +42,21 @@ def test_mocker_mock_with_spec(mocker):
 
     user = mock_repo.find_by_id(1)
     assert user.name == "John"
+
+# mocker.patch() - patching made easy
+
+def test_mocker_patch(mocker):
+    """
+    mocker.patch() replaces objects during test
+    automatically cleaned up after test
+    """
+    #Patch os.path.exists to always return True
+    mock_exists = mocker.patch('os.path.exists',return_value=True)
+
+    assert os.path.exists('/any/path/at/all') is True
+    assert os.path.exists('/fake/path') is True
+
+    mock_exists.assert_called()
+
+
 
