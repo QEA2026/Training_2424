@@ -24,3 +24,21 @@ def test_mocker_creates_mocks(mocker):
 
     assert result == 42
     mock_func.assert_called_once()
+
+def test_mocker_mock_with_spec(mocker):
+    """
+    Use spec to ensure mock has same interface as real object.
+
+    Catches typos in method names!
+    """
+    mock_repo = mocker.Mock(spec=UserRepository)
+
+    #This works -find_by_id exists on UserRepository
+    mock_repo.find_by_id.return_value = User(1,"John","john@test.com")
+
+    #This would reaise AttributeError if uncommented:
+    # mock_repo.find_by_idd.return_value = None #Typo!
+
+    user = mock_repo.find_by_id(1)
+    assert user.name == "John"
+
