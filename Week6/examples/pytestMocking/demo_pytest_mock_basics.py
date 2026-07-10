@@ -58,5 +58,31 @@ def test_mocker_patch(mocker):
 
     mock_exists.assert_called()
 
+def test_mocker_patch_dict(mocker):
+    """
+    mocker.patch.dict() patches dictionary contents.
+
+    great for environmental variables!
+    """
+    mocker.patch.dict(os.environ, {
+        'API_KEY':'test-key-123',
+        'DEBUG':'true'
+    })
+
+    assert os.environ['API_KEY'] == 'test-key-123'
+    assert os.environ['DEBUG'] == 'true'
+
+def test_mocker_patch_object(mocker):
+    """
+    mocker.patch.object() patches a specific method on an object.
+    """
+    user = User(1,"original","original@test.com")
+
+    #Patch just the email property
+    mocker.patch.object(user, 'email','patched@test.com')
+
+    assert user.email == 'patched@test.com'
+    assert user.name == "original" #Not patched
+
 
 
