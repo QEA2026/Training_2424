@@ -196,7 +196,11 @@ def test_with_fixtures(user_service, mock_repository):
     assert user.name == "Test User"
     mock_repository.find_by_id.assert_called_once_with(1)
 
-
+def test_create_user_with_fixtures(user_service, mock_email_client):
+    """Test user creation with fixtures"""
+    user = user_service.create_user("New User","new@test.com")
+    assert user.name == "New User"
+    mock_email_client.send.assert_called_once()
 
 
 
