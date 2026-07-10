@@ -104,4 +104,27 @@ def test_user_service_with_mock_repo(mocker):
     assert user.name == "John"
     mock_repo.find_by_id.assert_called_once_with(1)
 
+def test_user_service_create_user(mocker):
+    """
+    Test user creation with mocked repo and email client
+    """
 
+    #Create mocks
+    mock_repo = mocker.Mock(spec=UserRepository)
+    mock_email = mocker.Mock(spec=EmailClient)
+
+    #Setup Behavior
+    mock_repo.find_by_email.return_value = None # no existing user
+    mock_repo.save.side_effect = lambda u: User(id=100, name = u.name, email = u.email)
+
+    mock_email.send.return_value = True
+
+    #Create service and test
+    service = UserService(repository=mock_repo, email_client=mock_email)
+    user = service.create_user("Alice", "alice@test.com")
+
+    #Verify
+    assert user.id == 100
+    assert user.name == "Alice"
+    mock_repo.save.assert_called_once()
+    mock_email.send.assert_called_once()
