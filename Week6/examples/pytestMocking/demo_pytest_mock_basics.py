@@ -166,6 +166,38 @@ def test_mocker_spy(mocker):
     mock_repo.save.assert_called_once_with(user)
     mock_email.send.assert_called_once()
 
+# Combine mocker with Pytest Fixtures
+@pytest.fixture
+def mock_repository(mocker):
+    """ Fixture that provides a configured mock repository"""
+    mock = mocker.Mock(spec=UserRepository)
+    mock.find_by_id.return_value = User(1,"Test User", "test@test.com")
+    mock.find_by_email.return_value = None
+    mock.save.side_effect = lambda u: User(id=u.id, name = u.name, email=u.email)
+    return mock
+
+@pytest.fixture
+def mock_email_client(mocker):
+    """Fixture that provides a mock email client."""
+    mock = mocker.Mock(spec=EmailClient)
+    mock.send.return_value = True
+    return mock
+
+@pytest.fixture
+def user_service(mock_repository, mock_email_client):
+    """UserService with all dependencies mocked."""
+    return UserService(repository=mock_repository,
+                       email_client= mock_email_client)
+
+def test_with_fixtures(user_service, mock_repository):
+    "Use the fixture-provided service and mocks."
+    user = user_service.get_user(1)
+
+    assert user.name == "Test User"
+    mock_repository.find_by_id.assert_called_once_with(1)
+
+
+
 
 
     
