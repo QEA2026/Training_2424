@@ -21,3 +21,24 @@ def test_side_effect_raises_exception():
         mock_func()
 
     assert "Invalid Input" in str(exc_info.value)
+
+def test_side_effect_different_exceptions():
+    """
+    Different exceptions for different calls
+    """
+    mock = Mock()
+    mock.side_effect = [
+        ConnectionError("Network Failed"),
+        TimeoutError("Request timed out"),
+        {"result": "success"} #finally succeeds
+    ]
+
+    with pytest.raises(ConnectionError):
+        mock()
+
+    with pytest.raises(TimeoutError):
+        mock()
+
+    result = mock()
+    assert result == {"result":"success"}
+    
