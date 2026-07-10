@@ -128,3 +128,45 @@ def test_user_service_create_user(mocker):
     assert user.name == "Alice"
     mock_repo.save.assert_called_once()
     mock_email.send.assert_called_once()
+
+#mocker.spy() - Track real function calls
+def test_mocker_spy(mocker):
+
+    """
+    Spy wraps a real function to track calls
+    The function still executes, but you can verify it was called
+    """
+    #Create a real list
+
+    #Arrange
+    #Create mocks
+    mock_repo = mocker.Mock(spec=UserRepository)
+    mock_email = mocker.Mock(spec=EmailClient)
+
+    service = UserService(mock_repo, mock_email)
+
+    user = User(id=1,name="Alice",email="alice@example.com")
+
+    mock_repo.find_by_id.return_value = user
+    mock_repo.save.return_value = user
+
+    #spy on the REAL get_user method
+    spy = mocker.spy(service, "get_user")
+
+    #Act
+    result = service.deactivate_user(1)
+
+    #Assert
+    #the real method executed
+    assert result.active is False
+
+    # spy recorded the call
+    spy.assert_called_once_with(1)
+
+    mock_repo.save.assert_called_once_with(user)
+    mock_email.send.assert_called_once()
+
+
+
+    
+
