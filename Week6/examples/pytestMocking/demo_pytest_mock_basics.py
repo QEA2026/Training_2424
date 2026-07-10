@@ -84,5 +84,24 @@ def test_mocker_patch_object(mocker):
     assert user.email == 'patched@test.com'
     assert user.name == "original" #Not patched
 
+#testing with mocked dependencies
+
+def test_user_service_with_mock_repo(mocker):
+    """
+    Create UserService with mocked repository.
+    """
+
+    #Create the mock repository
+    mock_repo = mocker.Mock(spec=UserRepository)
+    mock_repo.find_by_id.return_value = User(1,"John","john@test.com")
+
+    #Create service with mock
+    service = UserService(repository=mock_repo)
+
+    #Test
+    user = service.get_user(1)
+
+    assert user.name == "John"
+    mock_repo.find_by_id.assert_called_once_with(1)
 
 
