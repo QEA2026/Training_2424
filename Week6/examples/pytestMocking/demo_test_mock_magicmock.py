@@ -75,9 +75,11 @@ def test_autospec_with_mocker(mocker):
     Using autospec with pytest-mock
     """
     mock_calc = mocker.create_autospec(Calculator)
+    #mock_calc = mocker.Mock(spec=Calculator)
     mock_calc.add.return_value = 100
 
-    result = mock_calc.add(50, 50)
+    #result = mock_calc.add(1) #would pass tests with spec but not autospec
+    result = mock_calc.add(50,50) 
     assert result == 100
 
 
