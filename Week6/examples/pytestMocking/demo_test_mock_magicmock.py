@@ -77,7 +77,7 @@ def test_autospec_with_mocker(mocker):
     mock_calc = mocker.create_autospec(Calculator)
     mock_calc.add.return_value = 100
 
-    result = mock_calc.add(50,50)
+    result = mock_calc.add(50, 50)
     assert result == 100
 
 
