@@ -1,7 +1,6 @@
 """
 Demo: Allure Python Features - Steps, Attachments, and Rich Reporting
 
-INSTRUCTOR TALKING POINTS:
 1. allure.step() context manager for logical test phases
 2. allure.attach() for adding evidence
 3. Step functions with @allure.step decorator
