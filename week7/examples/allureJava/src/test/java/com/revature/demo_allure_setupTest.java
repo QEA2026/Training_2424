@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @Epic("Week 6: Unit Testing")
 @Feature("Allure Reporting")
 @DisplayName("Allure JUnit5 Setup Demo")
-public class demo_allure_Test_setup {
+public class demo_allure_setupTest {
 
     // ==========================================================
     // SECTION 1: Basic Allure Annotations
