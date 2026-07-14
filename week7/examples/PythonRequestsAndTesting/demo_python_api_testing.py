@@ -12,6 +12,8 @@ pip install pytest requests pytest-html
 RUN TESTS:
 pytest demo_python_api_testing.py -v
 pytest demo_python_api_testing.py -v --html=report.html
+pytest demo_python_api_testing.py -v -s --cov=. --cov-report=html
+(last if install pytest-cov)
 """
 
 import pytest
