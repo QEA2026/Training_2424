@@ -9,8 +9,11 @@ package com.revature;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("First Selenium WebDriver Tests")
 public class demo_selenium_first_test {
@@ -46,6 +49,26 @@ public class demo_selenium_first_test {
         if(driver != null){
             driver.quit();
         }
+    }
+
+    //Basic Navigation
+    @Test
+    @DisplayName("Navigate to website and verify title")
+    void naviageToWebsite_verifyTitle(){
+        //1. open a URL
+        //2. get the page title
+        //3. assert it matches expected
+
+        //navigate to the website
+        driver.get("https://www.selenium.dev/");
+
+        // get page title
+        String title = driver.getTitle();
+        System.out.println("Page Title: " + title);
+
+        //Verify title
+        assertTrue(title.contains("Selenium"),
+                "Title shoudl contain 'Selenium'");
     }
 
 }
