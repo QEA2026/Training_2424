@@ -270,7 +270,7 @@ public class demo_rest_assured_junit5 {
     }
 
     // ==========================================================
-    // SECTION 6: Combining JUnit and Hamcrest Assertions
+    // SECTION 6: more Junit
     // ==========================================================
 
     @Test
