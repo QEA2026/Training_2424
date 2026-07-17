@@ -6,14 +6,11 @@ package com.revature;
 //get() navigates to URL, getTitle() gets the page title...
 
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("First Selenium WebDriver Tests")
 public class demo_selenium_first_test {
@@ -84,6 +81,136 @@ public class demo_selenium_first_test {
 
         assertTrue(currentUrl.contains("documentation"),
                 "URL should contain 'documentation'");
+    }
+
+    @Test
+    @DisplayName("Get page source")
+    void getPageSource_containsExpectedContent() {
+        /*
+         * getPageSource() returns raw HTML
+         * Useful for debugging or content verification
+         */
+
+        driver.get("https://www.selenium.dev/");
+
+        String pageSource = driver.getPageSource();
+
+        // Verify page contains expected content
+        assertTrue(pageSource.contains("Selenium"),
+                "Page source should contain 'Selenium'");
+
+        // Print first 500 characters for demo
+        System.out.println("Page source (first 500 chars):");
+        System.out.println(pageSource.substring(0, Math.min(500, pageSource.length())));
+    }
+
+    // ==========================================================
+    // SECTION 2: Basic WebDriver Properties
+    // ==========================================================
+
+    @Test
+    @DisplayName("WebDriver window handle")
+    void getWindowHandle_returnsUniqueId() {
+        /*
+         * INSTRUCTOR NOTE:
+         * Window handle is a unique ID for each browser window
+         * Used for switching between multiple windows/tabs
+         */
+
+        driver.get("https://www.selenium.dev/");
+
+        String windowHandle = driver.getWindowHandle();
+        System.out.println("Window handle: " + windowHandle);
+
+        assertNotNull(windowHandle, "Window handle should not be null");
+        assertFalse(windowHandle.isEmpty(), "Window handle should not be empty");
+    }
+
+    // ==========================================================
+    // SECTION 3: Test Lifecycle Demo
+    // ==========================================================
+
+    @Test
+    @DisplayName("Multiple navigations in single test")
+    void multipleNavigations_workCorrectly() {
+        /*
+         * Show that we can navigate to multiple pages in one test
+         * Each test gets a fresh browser instance (@BeforeEach)
+         */
+
+        // First navigation
+        driver.get("https://www.selenium.dev/");
+        assertEquals("Selenium", driver.getTitle().split(" ")[0]);
+
+        // Second navigation
+        driver.get("https://www.google.com");
+        assertTrue(driver.getTitle().toLowerCase().contains("google"));
+
+        // Third navigation
+        driver.get("https://www.selenium.dev/documentation/");
+        assertTrue(driver.getCurrentUrl().contains("documentation"));
+    }
+
+    // ==========================================================
+    // SECTION 4: Common Mistakes Demo
+    // ==========================================================
+
+    @Test
+    @DisplayName("Demo: What happens without driver.quit()")
+    @Disabled("Intentionally disabled - demonstrates bad practice")
+    void withoutQuit_browserStaysOpen() {
+        /*
+         * If we don't call quit(), the browser stays open!
+         * This leads to:
+         * - Memory leaks
+         * - Port exhaustion
+         * - Zombie browser processes
+         *
+         * NEVER do this in real tests!
+         */
+
+        WebDriver tempDriver = new ChromeDriver();
+        tempDriver.get("https://www.selenium.dev/");
+
+        // Forgetting to close - BAD!
+        // tempDriver.quit();
+    }
+
+    // ==========================================================
+    // SECTION 5: Using Practice Website
+    // ==========================================================
+
+    @Test
+    @DisplayName("Navigate to practice website - The Internet")
+    void practiceWebsite_theInternet() {
+        /*
+         * The Internet (Heroku) is excellent for Selenium practice
+         * It has examples of many UI patterns
+         */
+
+        driver.get("https://the-internet.herokuapp.com/");
+
+        String title = driver.getTitle();
+        System.out.println("Practice site title: " + title);
+
+        assertTrue(title.contains("Internet"),
+                "Should be on The Internet practice site");
+    }
+
+    @Test
+    @DisplayName("Navigate to practice website - DemoQA")
+    void practiceWebsite_demoQA() {
+        /*
+         * DemoQA has forms, widgets, and interactive elements
+         */
+
+        driver.get("https://demoqa.com/");
+
+        String currentUrl = driver.getCurrentUrl();
+        System.out.println("DemoQA URL: " + currentUrl);
+
+        assertTrue(currentUrl.contains("demoqa"),
+                "Should be on DemoQA practice site");
     }
 
 }
