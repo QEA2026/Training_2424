@@ -54,7 +54,7 @@ public class demo_selenium_first_test {
     //Basic Navigation
     @Test
     @DisplayName("Navigate to website and verify title")
-    void naviageToWebsite_verifyTitle(){
+    void navigateToWebsite_verifyTitle(){
         //1. open a URL
         //2. get the page title
         //3. assert it matches expected
@@ -69,6 +69,21 @@ public class demo_selenium_first_test {
         //Verify title
         assertTrue(title.contains("Selenium"),
                 "Title shoudl contain 'Selenium'");
+    }
+
+    @Test
+    @DisplayName("Get current URL after navigation")
+    void navigateToWebsite_verifyUrl(){
+        //getCurrentUrl() returns the current page URL
+        //Useful for verifyng redirects or navigation
+
+        driver.get("https://www.selenium.dev/documentation");
+
+        String currentUrl = driver.getCurrentUrl();
+        System.out.println("Current URL: " + currentUrl);
+
+        assertTrue(currentUrl.contains("documentation"),
+                "URL should contain 'documentation'");
     }
 
 }
