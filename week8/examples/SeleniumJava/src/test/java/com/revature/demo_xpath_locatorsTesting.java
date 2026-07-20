@@ -162,4 +162,39 @@ public class demo_xpath_locatorsTesting {
 
         System.out.println("Heading: " + heading.getText());
     }
+
+    //4. XPath Axes
+
+    @Test
+    @DisplayName("parent axis - Navigate up")
+    void xpathParent_navigateUp(){
+        /*
+        parent:: moves up one level in DOM
+        useful when find child but need parent
+         */
+
+        driver.get(BASE_URL + "/tables");
+
+        //Find a cell , then get its parent row
+        WebElement cell = driver.findElement(By.xpath(
+                "//td[text()='jsmith@gmail.com']"
+        ));
+        WebElement parentRow = cell.findElement(By.xpath("./parent::tr"));
+
+        System.out.println("Parent row text: " + parentRow.getText());
+        assertTrue(parentRow.getText().contains("Smith"));
+    }
+
+    @Test
+    @DisplayName("child axis - Navigate Down")
+    void xpathChild_navigateDown(){
+        /*
+        child:: selects direct children
+        Default axis, so child::div is same as just div
+         */
+
+        driver.get(BASE_URL);
+
+        //find all direct child links of the content div
+    }
 }
