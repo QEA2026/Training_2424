@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 
 @DisplayName("Element Interactions Demo")
-public class demo_element_interactions {
+public class demo_element_interactionsTests {
 
     private WebDriver driver;
     private static final String BASE_URL = "https://the-internet.herokuapp.com";
