@@ -11,6 +11,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Demo: XPath Locators in Selenium
@@ -94,5 +95,33 @@ public class demo_xpath_locatorsTesting {
         );
         System.out.println("Heading text: " + heading.getText());
         assertNotNull(heading.getText());
+    }
+
+    //2. XPath with Attributes
+
+    @Test
+    @DisplayName("XPath by ID attribute")
+    void xpathById_findElement(){
+        driver.get(BASE_URL + "/login");
+
+        //Find by id attribute
+        WebElement usernameInput = driver.findElement(
+                By.xpath("//input[@id='username']")
+        );
+        assertTrue(usernameInput.isDisplayed());
+        System.out.println("Found username input by id");
+    }
+
+    @Test
+    @DisplayName("XPath by name attribute")
+    void xpathByName_findElement(){
+        driver.get(BASE_URL + "/login");
+
+        //Find by id attribute
+        WebElement passwordInput = driver.findElement(
+                By.xpath("//input[@name='password']")
+        );
+        assertTrue(passwordInput.isDisplayed());
+        System.out.println("Found password input by name");
     }
 }
