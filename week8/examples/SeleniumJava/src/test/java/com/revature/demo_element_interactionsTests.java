@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -94,10 +95,13 @@ public class demo_element_interactionsTests {
         * works with text fields, textareas, etc.
          */
 
-        driver.get(BASE_URL + "login");
+        driver.get(BASE_URL + "/login");
 
         WebElement usernameInput = driver.findElement(By.id("username"));
         WebElement passwordInput = driver.findElement(By.id("password"));
+
+        //clear the field first
+        usernameInput.clear();
 
         //Type into fields
         usernameInput.sendKeys("tomsmith");
@@ -108,6 +112,29 @@ public class demo_element_interactionsTests {
         assertEquals("SuperSecretPassword!", passwordInput.getAttribute("value"));
 
         System.out.println("Text Entered successfully!");
+    }
+
+    @Test
+    @DisplayName("sendKeys() - Special Keys")
+    void snedKeys_specialKeys() {
+
+        //Keys enum provides special keys like ENTER, TAB, etc.
+
+        driver.get(BASE_URL + "/login");
+
+        WebElement usernameInput = driver.findElement(By.id("username"));
+        WebElement passwordInput = driver.findElement(By.id("password"));
+
+        //type and press TAB to move to next field
+        usernameInput.sendKeys("tomsmith");
+        usernameInput.sendKeys(Keys.TAB);
+
+        //Type password and press ENTER to submit
+        passwordInput.sendKeys("SuperSecretPassword!");
+        passwordInput.sendKeys(Keys.ENTER);
+
+        //Verify the login occurred
+        System.out.println("Current URL after login: "+driver.getCurrentUrl());
     }
 
 
