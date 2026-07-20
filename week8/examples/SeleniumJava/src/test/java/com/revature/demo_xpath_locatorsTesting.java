@@ -124,4 +124,42 @@ public class demo_xpath_locatorsTesting {
         assertTrue(passwordInput.isDisplayed());
         System.out.println("Found password input by name");
     }
+
+    @Test
+    @DisplayName("XPath by multiple attributes")
+    void xpathByMultipleAttributes_moreSpecific(){
+        driver.get(BASE_URL + "/login");
+        //combine multiple attributes for more specific matching
+
+        WebElement loginButton = driver.findElement(
+                By.xpath("//button[@type='submit' and @class='radius']")
+        );
+
+        assertTrue(loginButton.isDisplayed());
+        System.out.println("Found login button: " + loginButton.getText());
+    }
+
+    @Test
+    @DisplayName("contains() - Partial text match")
+    void xpathContains_partialMatch(){
+        /*
+        contains() matches if attributes/text CONTAINS the value
+        Great for dynamic IDS or partial class names
+         */
+
+        driver.get(BASE_URL);
+
+        //Find link containing "Form" in text
+        WebElement formLink = driver.findElement(
+                By.xpath("//a[contains(text(),'Form')]")
+                );
+
+        System.out.println("Found Link: " +formLink.getText());
+        assertTrue(formLink.getText().contains("Form"));
+
+        //Find element with class containing 'heading'
+        WebElement heading = driver.findElement(By.xpath("//*[contains(@class,'heading')]"));
+
+        System.out.println("Heading: " + heading.getText());
+    }
 }
