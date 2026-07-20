@@ -10,6 +10,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 /**
  * Demo: XPath Locators in Selenium
  *
@@ -69,5 +71,28 @@ public class demo_xpath_locatorsTesting {
         } catch (NoSuchElementException e ){
             System.out.println("Absolute XPath is brittle - element not found");
         }
+    }
+
+    @Test
+    @DisplayName("relative XPath - starts with //")
+    void relativeXpath_startsAnywhere(){
+        /*
+        Relative XPath starts with double slash (//)
+        Searches entire document for matching elements
+
+        MUCH BETTER:
+        -more maintainable
+        -survives DOM restructuring
+        -preferred in production
+         */
+
+        driver.get(BASE_URL);
+
+        //Relative XPath - GOOD PRACTICE
+        WebElement heading = driver.findElement(
+                By.xpath("//h1[@class='heading']")
+        );
+        System.out.println("Heading text: " + heading.getText());
+        assertNotNull(heading.getText());
     }
 }
