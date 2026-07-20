@@ -137,5 +137,56 @@ public class demo_element_interactionsTests {
         System.out.println("Current URL after login: "+driver.getCurrentUrl());
     }
 
+    //Section 3: getting element Information
+    @Test
+    @DisplayName("getText() - Get visible text")
+    void getText_getVisibleText(){
+    /*
+    getText() returns the visible text of an element
+    does not include hidden text or attribute values
+     */
+
+    driver.get(BASE_URL + "/login");
+
+    WebElement heading = driver.findElement(By.tagName("h2"));
+    String headingText = heading.getText();
+
+    System.out.println("Heading Text: "+ headingText);
+    assertEquals("Login Page",headingText);
+
+    //Get text from Paragraph
+    WebElement subheading = driver.findElement(By.tagName("h4"));
+    System.out.println("Subheading: " +subheading.getText());
+
+    }
+
+    @Test
+    @DisplayName("getAttribute() - Get attribute values")
+    void getAttribute_getAttributeValues(){
+        //getAttribute() retrieves HTML attribute values
+        //Common attributes: id, class, name, href, value, placeholder
+
+        driver.get(BASE_URL + "/login");
+
+        WebElement usernameInput = driver.findElement(By.id("username"));
+
+        //get various attributes
+        String id = usernameInput.getAttribute("id");
+        String type = usernameInput.getAttribute("type");
+        String name = usernameInput.getAttribute("name");
+
+        System.out.println("ID: " + id);
+        System.out.println("Type: " + type);
+        System.out.println("Name: " + name);
+
+        assertEquals("username", id);
+        assertEquals("text",type);
+
+        //Get href from a link
+        WebElement link = driver.findElement(By.xpath("//a[contains(text(),'Elemental')]"));
+        String href = link.getAttribute("href");
+        System.out.println("Link href: " +href);
+    }
+
 
 }
