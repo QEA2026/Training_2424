@@ -15,7 +15,7 @@ Feature: User Authentication
     Given the user is on the login page
 
     #When - Describes the action being tested
-    When the user enters username"<username>"
+    When the user enters username "<username>"
     And the user enters password "<password>"
     And the user clicks the login button
 
