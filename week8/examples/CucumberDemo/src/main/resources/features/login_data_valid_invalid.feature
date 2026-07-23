@@ -27,3 +27,11 @@ Feature: User Authentication
     Examples: Valid Credentials
     | username | password             | expected_result | expected_page |
     | tomsmith | SuperSecretPassword! | success message | secure        |
+
+    #Invalid credentials
+    Examples: InValid Credentials
+      | username | password             | expected_result | expected_page |
+      | tomsmith | wrongpassword        | error message   | login         |
+      | wronguser| anypassword          | error message   | login         |
+      |          | somepassword         | error message   | login         |
+      | tomsmith |                      | error message   | login         |
