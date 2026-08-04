@@ -5,5 +5,8 @@ docker run -d -p 8080:8080 myapp:v1
 
 
 
-#also 
+#for just front end
 docker build -t reactapp:v1 . 
+
+#for both with docker compose in directory with docker-compose.yml
+docker compose up -d --build
